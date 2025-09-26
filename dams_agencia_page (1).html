@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAMS Agencia - Eventos de Belleza</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Avenir:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-pink: #fcc3d2;
+            --secondary-pink: #bc7a8f;
+            --dark-navy: #0f0e0f;
+            --light-accent: #fafbff;
+            --glass-bg: rgba(252, 195, 210, 0.08);
+            --glass-border: rgba(252, 195, 210, 0.18);
+            --text-primary: #2d2d2d;
+            --text-secondary: #6b6b6b;
+        }
+
+        body {
+            font-family: 'Avenir', 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--primary-pink) 0%, #fdf1f4 30%, #fff0f3 70%, var(--secondary-pink) 100%);
+            background-size: 400% 400%;
+            animation: gentleFlow 20s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes gentleFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Elements */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.06;
+        }
+
+        .shape-1 {
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, var(--secondary-pink), var(--primary-pink));
+            border-radius: 50%;
+            top: -140px;
+            right: -140px;
+            animation: floatSoft 25s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, var(--primary-pink), #fff0f3);
+            border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
+            bottom: -90px;
+            left: -90px;
+            animation: floatSoft 30s ease-in-out infinite reverse;
+        }
+
+        .shape-3 {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary-pink), var(--secondary-pink));
+            border-radius: 25px;
+            top: 40%;
+            right: 8%;
+            animation: gentleRotate 35s linear infinite;
+        }
+
+        @keyframes floatSoft {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(20px, -20px) rotate(90deg); }
+            66% { transform: translate(-15px, 15px) rotate(180deg); }
+        }
+
+        @keyframes gentleRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Main Container */
+        .container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 360px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(25px);
+            border-right: 1px solid rgba(252, 195, 210, 0.3);
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(188, 122, 143, 0.1);
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(252, 195, 210, 0.1) 100%);
+            pointer-events: none;
+        }
+
+        /* Logo Section */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.2rem;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .logo:hover {
+            transform: scale(1.08) rotate(3deg);
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: linear-gradient(135deg, var(--primary-pink), var(--secondary-pink));
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: softPulse 3s ease-in-out infinite;
+        }
+
+        .logo-inner {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--secondary-pink), var(--primary-pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 15px 35px rgba(188, 122, 143, 0.2);
+        }
+
+        .logo-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            letter-spacing: -0.5px;
+        }
+
+        @keyframes softPulse {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.02); opacity: 0.6; }
+        }
+
+        .brand-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--secondary-pink);
+            margin-bottom: 0.4rem;
+            letter-spacing: 2px;
+        }
+
+        .brand-tagline {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* Navigation */
+        .nav-section {
+            flex: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-title {
+            font-size: 0.95rem;
+            color: var(--secondary-pink);
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.3rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.9rem 1.2rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(252, 195, 210, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
+        }
+
+        .nav-link:hover {
+            background: rgba(252, 195, 210, 0.15);
+            transform: translateX(8px);
+            color: var(--secondary-pink);
+        }
+
+        .nav-icon {
+            width: 5px;
+            height: 5px;
+            background: var(--primary-pink);
+            border-radius: 50%;
+            margin-right: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover .nav-icon {
+            background: var(--secondary-pink);
+            transform: scale(1.4);
+        }
+
+        /* Social Links */
+        .social-section {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 18px;
+            padding: 1.8rem;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(252, 195, 210, 0.2);
+        }
+
+        .social-title {
+            font-size: 0.95rem;
+            color: var(--secondary-pink);
+            margin-bottom: 1.2rem;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 0.8px;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .social-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.9rem;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(252, 195, 210, 0.2);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .social-link:hover {
+            background: rgba(252, 195, 210, 0.2);
+            transform: translateY(-3px);
+            color: var(--secondary-pink);
+            box-shadow: 0 8px 20px rgba(188, 122, 143, 0.15);
+        }
+
+        .social-icon {
+            width: 20px;
+            height: 20px;
+            margin-bottom: 0.4rem;
+            background: var(--primary-pink);
+            border-radius: 50%;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 3.5rem;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--secondary-pink);
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 15px rgba(188, 122, 143, 0.1);
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2.2rem;
+            background: linear-gradient(135deg, var(--secondary-pink), var(--primary-pink));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            letter-spacing: 0.8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(188, 122, 143, 0.3);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(188, 122, 143, 0.4);
+        }
+
+        /* Video Section */
+        .video-section {
+            margin-bottom: 3rem;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(252, 195, 210, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .video-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--secondary-pink);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .video-title::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-pink), var(--secondary-pink));
+            border-radius: 2px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed rgba(188, 122, 143, 0.3);
+        }
+
+        .video-placeholder {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .video-placeholder::before {
+            content: '▶';
+            display: block;
+            font-size: 3rem;
+            color: var(--primary-pink);
+            margin-bottom: 1rem;
+        }
+
+        /* Content Cards */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(252, 195, 210, 0.2);
+            border-radius: 18px;
+            padding: 2.2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(252, 195, 210, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .content-card:hover::before {
+            opacity: 1;
+        }
+
+        .content-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(188, 122, 143, 0.15);
+        }
+
+        .card-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: var(--secondary-pink);
+            margin-bottom: 1.3rem;
+            position: relative;
+        }
+
+        .card-title::after {
+            content: '';
+            position: absolute;
+            bottom: -0.4rem;
+            left: 0;
+            width: 45px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-pink), var(--secondary-pink));
+            border-radius: 2px;
+        }
+
+        .card-text {
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+        }
+
+        .full-width-card {
+            grid-column: 1 / -1;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(252, 195, 210, 0.2);
+            border-radius: 18px;
+            padding: 2.8rem;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 2rem 1.5rem;
+            }
+
+            .main-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .shape-1, .shape-2, .shape-3 {
+                display: none;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(252, 195, 210, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-pink), var(--secondary-pink));
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary-pink), var(--primary-pink));
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-inner">
+                        <span class="logo-text">dms</span>
+                    </div>
+                </div>
+                <h1 class="brand-name">DAMS</h1>
+                <p class="brand-tagline">AGENCIA DE BELLEZA</p>
+            </div>
+
+            <nav class="nav-section">
+                <h3 class="nav-title">Navegación</h3>
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#inicio" class="nav-link">
+                            <span class="nav-icon"></span>
+                            Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#videos" class="nav-link">
+                            <span class="nav-icon"></span>
+                            Videos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#mision" class="nav-link">
+                            <span class="nav-icon"></span>
+                            Misión
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#vision" class="nav-link">
+                            <span class="nav-icon"></span>
+                            Visión
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#servicios" class="nav-link">
+                            <span class="nav-icon"></span>
+                            Servicios
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="social-section">
+                <h4 class="social-title">Síguenos</h4>
+                <div class="social-grid">
+                    <a href="https://www.facebook.com/DAMS.AGENCIA/" target="_blank" class="social-link">
+                        <div class="social-icon"></div>
+                        Facebook
+                    </a>
+                    <a href="https://www.instagram.com/dams.agencia/" target="_blank" class="social-link">
+                        <div class="social-icon"></div>
+                        Instagram
+                    </a>
+                    <a href="https://wa.me/message/JXZ5VYPXUG2JL1" target="_blank" class="social-link">
+                        <div class="social-icon"></div>
+                        WhatsApp
+                    </a>
+                    <a href="https://wa.me/message/A2H24QWXKJ65G1" target="_blank" class="social-link">
+                        <div class="social-icon"></div>
+                        WhatsApp 2
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <section class="hero-section" id="inicio">
+                <h1 class="hero-title">BELLEZA UNICA</h1>
+                <p class="hero-subtitle">Creamos eventos de belleza que inspiran y transforman</p>
+                <a href="#videos" class="hero-cta">Ver nuestro trabajo</a>
+            </section>
+
+            <section class="video-section" id="videos">
+                <h2 class="video-title">Nuestros Videos</h2>
+                <div class="video-container">
+                    <div class="video-placeholder">
+                        Espacio para videos
+                        <br>
+                        <small>Aquí puedes agregar tus videos de eventos y trabajos</small>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-grid">
+                <div class="content-card" id="mision">
+                    <h2 class="card-title">Misión</h2>
+                    <p class="card-text">
+                        En DAMS Agencia trabajamos para diseñar, producir y ejecutar eventos y experiencias de formación en el ámbito de la belleza, el estilismo y la moda, con un enfoque en la excelencia, la innovación y la profesionalización del sector.
+                    </p>
+                </div>
+
+                <div class="content-card" id="vision">
+                    <h2 class="card-title">Visión</h2>
+                    <p class="card-text">
+                        Consolidarnos como la agencia líder en México en producción de eventos y programas formativos en belleza y moda, reconocida a nivel nacional e internacional por la calidad de nuestras propuestas.
+                    </p>
+                </div>
+
+                <div class="content-card" id="servicios">
+                    <h2 class="card-title">Servicios</h2>
+                    <p class="card-text">
+                        • Producción de eventos de belleza<br>
+                        • Programas de formación especializada<br>
+                        • Workshops y masterclasses<br>
+                        • Consultoría en imagen y estilismo
+                    </p>
+                </div>
+
+                <div class="content-card" id="galeria">
+                    <h2 class="card-title">Galería</h2>
+                    <p class="card-text">
+                        Explora nuestro portafolio de eventos realizados, desde desfiles de moda hasta workshops especializados que han transformado la industria de la belleza.
+                    </p>
+                </div>
+            </div>
+
+            <div class="full-width-card">
+                <h2 class="card-title">¿Listo para crear algo extraordinario?</h2>
+                <p class="card-text">
+                    Únete a nosotros en el mundo de la belleza y la moda. Creamos experiencias que transforman, inspiran y conectan a profesionales de toda la industria.
+                </p>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
